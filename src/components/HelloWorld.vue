@@ -12,7 +12,7 @@
           <b>CUENTA:</b> {{movementValues.data.data.records.numero_cuenta}}
         </v-list-item-subtitle>
         <v-list-item-subtitle>
-          <b>{{movementValues.data.data.records.tipo_moneda | capitalize}}</b> - {{movementValues.data.data.records.banco | capitalize}}
+          <b>{{movementValues.data.data.records.tipo_moneda}}</b> - {{movementValues.data.data.records.banco}}
         </v-list-item-subtitle>
       </v-list-item-content>
     </v-list-item>
@@ -67,19 +67,17 @@
  </div>
 </template>
 
-<script lang="ts">
+<script>
 import Vue from "vue";
 import { mapActions } from 'vuex';
 
 export default Vue.extend({
- props:{
+ props: {
    movements: null,
    movementValues: null
  },
 
-  data: () => ({
-      
-  }),
+  data: () => ({}),
   methods: {
     ...mapActions({
       getAccountMovements:'getAccountMovements'
