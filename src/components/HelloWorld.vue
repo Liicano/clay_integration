@@ -1,162 +1,91 @@
 <template>
-  <div class="hello">
-    <h1>{{ msg }}</h1>
-    <p>
-      For a guide and recipes on how to configure / customize this project,<br />
-      check out the
-      <a href="https://cli.vuejs.org" target="_blank" rel="noopener"
-        >vue-cli documentation</a
-      >.
-    </p>
-    <h3>Installed CLI Plugins</h3>
-    <ul>
-      <li>
-        <a
-          href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-babel"
-          target="_blank"
-          rel="noopener"
-          >babel</a
-        >
-      </li>
-      <li>
-        <a
-          href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-typescript"
-          target="_blank"
-          rel="noopener"
-          >typescript</a
-        >
-      </li>
-      <li>
-        <a
-          href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-pwa"
-          target="_blank"
-          rel="noopener"
-          >pwa</a
-        >
-      </li>
-      <li>
-        <a
-          href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-router"
-          target="_blank"
-          rel="noopener"
-          >router</a
-        >
-      </li>
-      <li>
-        <a
-          href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-vuex"
-          target="_blank"
-          rel="noopener"
-          >vuex</a
-        >
-      </li>
-      <li>
-        <a
-          href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-eslint"
-          target="_blank"
-          rel="noopener"
-          >eslint</a
-        >
-      </li>
-      <li>
-        <a
-          href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-unit-mocha"
-          target="_blank"
-          rel="noopener"
-          >unit-mocha</a
-        >
-      </li>
-      <li>
-        <a
-          href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-e2e-cypress"
-          target="_blank"
-          rel="noopener"
-          >e2e-cypress</a
-        >
-      </li>
-    </ul>
-    <h3>Essential Links</h3>
-    <ul>
-      <li>
-        <a href="https://vuejs.org" target="_blank" rel="noopener">Core Docs</a>
-      </li>
-      <li>
-        <a href="https://forum.vuejs.org" target="_blank" rel="noopener"
-          >Forum</a
-        >
-      </li>
-      <li>
-        <a href="https://chat.vuejs.org" target="_blank" rel="noopener"
-          >Community Chat</a
-        >
-      </li>
-      <li>
-        <a href="https://twitter.com/vuejs" target="_blank" rel="noopener"
-          >Twitter</a
-        >
-      </li>
-      <li>
-        <a href="https://news.vuejs.org" target="_blank" rel="noopener">News</a>
-      </li>
-    </ul>
-    <h3>Ecosystem</h3>
-    <ul>
-      <li>
-        <a href="https://router.vuejs.org" target="_blank" rel="noopener"
-          >vue-router</a
-        >
-      </li>
-      <li>
-        <a href="https://vuex.vuejs.org" target="_blank" rel="noopener">vuex</a>
-      </li>
-      <li>
-        <a
-          href="https://github.com/vuejs/vue-devtools#vue-devtools"
-          target="_blank"
-          rel="noopener"
-          >vue-devtools</a
-        >
-      </li>
-      <li>
-        <a href="https://vue-loader.vuejs.org" target="_blank" rel="noopener"
-          >vue-loader</a
-        >
-      </li>
-      <li>
-        <a
-          href="https://github.com/vuejs/awesome-vue"
-          target="_blank"
-          rel="noopener"
-          >awesome-vue</a
-        >
-      </li>
-    </ul>
-  </div>
+ <div v-if="movements && movementValues">
+   <v-subheader>Saldo bancario</v-subheader>
+   <v-divider inset></v-divider>
+   <v-row>
+     <v-col class="px-4">
+      <center>
+       <v-list-item three-line>
+      <v-list-item-content>
+        <v-list-item-title>{{movementValues.data.data.items[0].saldo_disponible}}</v-list-item-title>
+        <v-list-item-subtitle>
+          <b>CUENTA:</b> {{movementValues.data.data.records.numero_cuenta}}
+        </v-list-item-subtitle>
+        <v-list-item-subtitle>
+          <b>{{movementValues.data.data.records.tipo_moneda | capitalize}}</b> - {{movementValues.data.data.records.banco | capitalize}}
+        </v-list-item-subtitle>
+      </v-list-item-content>
+    </v-list-item>
+      </center>
+     </v-col>
+      <v-col class="px-4">
+       <center>
+       
+   <v-subheader v-if="movements.data.data.items">{{movements.data.data.items.length}} Movimientos bancarios</v-subheader>
+
+
+    <v-list three-line subheader>
+      
+      <v-list-item
+        v-for="(item) in movements.data.data.items"
+        :key="item.id"
+       
+      >
+        <v-list-item-avatar>
+          <v-icon class="orange white--text">mdi-chevron-double-right</v-icon>
+        </v-list-item-avatar>
+
+        <v-list-item-content class="text-left">
+          <v-list-item-title>{{item.descripcion}}</v-list-item-title>
+          <v-list-item-subtitle class="caption">Dcto # <b>{{item.numero_documento}}</b></v-list-item-subtitle>
+          <v-list-item-subtitle class="caption">CLP {{item.monto}}</v-list-item-subtitle>
+        </v-list-item-content>
+
+        <v-list-item-action>
+          <v-list-item-subtitle class="caption"> <b>{{item.fecha_humana}}</b></v-list-item-subtitle>
+        </v-list-item-action>
+      </v-list-item>
+     
+    </v-list>
+  
+       </center>
+     </v-col>
+   </v-row>
+ </div>
+ <div v-else>
+   <v-row style="margin-top: 50%;" class="px-4">
+     <v-col>
+       <center>
+         <p class="title">Cargando...</p>
+          <v-progress-linear
+          indeterminate
+          color="green darken-2"
+         ></v-progress-linear>
+       </center>
+     </v-col>
+   </v-row>
+ </div>
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from "vue-property-decorator";
+import Vue from "vue";
+import { mapActions } from 'vuex';
 
-@Component
-export default class HelloWorld extends Vue {
-  @Prop() private msg!: string;
-}
+export default Vue.extend({
+ props:{
+   movements: null,
+   movementValues: null
+ },
+
+  data: () => ({
+      
+  }),
+  methods: {
+    ...mapActions({
+      getAccountMovements:'getAccountMovements'
+    }),
+    
+    
+  }
+});
 </script>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped lang="scss">
-h3 {
-  margin: 40px 0 0;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
-}
-</style>

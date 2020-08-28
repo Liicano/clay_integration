@@ -1,32 +1,51 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view />
-  </div>
+  <v-app>
+    <v-app-bar app color="#34cc02" dark>
+      <v-spacer></v-spacer>
+
+      <v-btn
+        href="https://github.com/vuetifyjs/vuetify/releases/latest"
+        target="_blank"
+        text
+      >
+        <span class="mr-2">Clay test</span>
+        <!-- <v-icon>mdi-person</v-icon> -->
+      </v-btn>
+    </v-app-bar>
+
+    <v-main>
+      <HelloWorld :movements="movements" :movementValues="movementValues" />
+    </v-main>
+  </v-app>
 </template>
 
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+<script lang="ts">
+import Vue from "vue";
+import HelloWorld from "./components/HelloWorld.vue";
+import { mapActions } from 'vuex';
 
-#nav {
-  padding: 30px;
+export default Vue.extend({
+  name: "App",
 
-  a {
-    font-weight: bold;
-    color: #2c3e50;
+  components: {
+    HelloWorld
+  },
 
-    &.router-link-exact-active {
-      color: #42b983;
+  data: () => ({
+    movements: null,
+    movementValues: null
+  }),
+   methods:{
+     ...mapActions({
+      getAccountMovements:'getAccountMovements',
+      getAccountValue:'getAccountValue'
+    }),
+   },
+    
+    async mounted(){
+     this.movements =  await this.getAccountMovements();
+     this.movementValues =  await this.getAccountValue();
     }
-  }
-}
-</style>
+  
+});
+</script>
