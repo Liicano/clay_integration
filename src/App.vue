@@ -20,32 +20,31 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
-import HelloWorld from "./components/HelloWorld.vue";
-import { mapActions } from 'vuex';
+import Vue from 'vue'
+import HelloWorld from './components/HelloWorld.vue'
+import { mapActions } from 'vuex'
 
 export default Vue.extend({
-  name: "App",
+  name: 'App',
 
   components: {
-    HelloWorld
+    HelloWorld,
   },
 
   data: () => ({
     movements: null,
-    movementValues: null
+    movementValues: null,
   }),
-   methods:{
-     ...mapActions({
-      getAccountMovements:'getAccountMovements',
-      getAccountValue:'getAccountValue'
+  methods: {
+    ...mapActions({
+      getAccountMovements: 'getAccountMovements',
+      getAccountValue: 'getAccountValue',
     }),
-   },
-    
-    async mounted(){
-     this.movements =  await this.getAccountMovements();
-     this.movementValues =  await this.getAccountValue();
-    }
-  
-});
+  },
+
+  async mounted() {
+    this.movements = await this.getAccountMovements()
+    this.movementValues = await this.getAccountValue()
+  },
+})
 </script>
